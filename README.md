@@ -16,7 +16,7 @@ Este repositorio contiene un clon de Spotify, diseñado como un reproductor de m
 
 - Astro
 - Bun (opcional)
-- [Otras bibliotecas o frameworks relevantes]
+- Tailwind, React, TypeScript
 
 ## Instalación
 
