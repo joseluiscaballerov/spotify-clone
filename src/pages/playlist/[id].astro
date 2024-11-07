@@ -51,7 +51,7 @@ const formattedDuration = formatDuration(totalDurationInSeconds);
     <!-- <PageHeader /> -->
 
     <header class="flex flex-row gap-8 px-6 mt-12">
-      <picture class="aspect-square w-52 h-52 flex-none">
+      <picture class="aspect-square w-52 h-52 flex-none imagenPlaylist">
         <img
           src={playlist?.cover}
           alt={`Cover of ${playlist?.title}`}
@@ -63,7 +63,7 @@ const formattedDuration = formatDuration(totalDurationInSeconds);
       <div class="flex flex-col justify-between">
         <h2 class="flex flex-1 items-end">Playlist</h2>
         <div>
-          <h1 class="text-5xl font-bold block text-white">
+          <h1 class="text-5xl font-bold block text-white tituloPlaylist">
             {playlist?.title}
             <span transition:name=`playlist ${playlist?.id} title`></span>
           </h1>

@@ -4,6 +4,7 @@ import { Slider } from "./Slider";
 
 export const Prev = () => (
   <svg
+    className="player-icon"
     fill="currentColor"
     role="img"
     height="16"
@@ -14,8 +15,10 @@ export const Prev = () => (
     <path d="M3.3 1a.7.7 0 0 1 .7.7v5.15l9.95-5.744a.7.7 0 0 1 1.05.606v12.575a.7.7 0 0 1-1.05.607L4 9.149V14.3a.7.7 0 0 1-.7.7H1.7a.7.7 0 0 1-.7-.7V1.7a.7.7 0 0 1 .7-.7h1.6z"></path>
   </svg>
 );
+
 export const Next = () => (
   <svg
+    className="player-icon"
     fill="currentColor"
     role="img"
     height="16"
@@ -29,7 +32,7 @@ export const Next = () => (
 
 export const Pause = ({ className }) => (
   <svg
-    className={className}
+    className={`player-icon ${className}`}
     role="img"
     height="16"
     width="16"
@@ -42,7 +45,7 @@ export const Pause = ({ className }) => (
 
 export const Play = ({ className }) => (
   <svg
-    className={className}
+    className={`player-icon ${className}`}
     role="img"
     height="16"
     width="16"
@@ -55,6 +58,7 @@ export const Play = ({ className }) => (
 
 export const VolumeSilence = () => (
   <svg
+    className="player-icon"
     fill="currentColor"
     role="presentation"
     height="16"
@@ -92,13 +96,13 @@ const CurrentSong = ({ image, title, artists }) => {
         overflow-hidden
       `}
     >
-      <picture className="w-16 h-16 bg-zinc-800 rounded-md shadow-lg overflow-hidden">
+      <picture className="player-image w-16 h-16 bg-zinc-800 rounded-md shadow-lg overflow-hidden">
         <img src={image} alt={title} />
       </picture>
 
       <div className="flex flex-col">
-        <h3 className="font-semibold text-sm block">{title}</h3>
-        <span className="text-xs opacity-80">{artists?.join(", ")}</span>
+        <h3 className="nombre-cancion font-semibold text-sm block">{title}</h3>
+        <span className="nombre-artista text-xs opacity-80">{artists?.join(", ")}</span>
       </div>
     </div>
   );
@@ -140,7 +144,7 @@ const SongControl = ({ audio }) => {
         value={[currentTime]}
         max={audio?.current?.duration ?? 0}
         min={0}
-        className="w-[400px]"
+        className="player-slider w-[400px]"
         onValueChange={(value) => {
           const [newCurrentTime] = value;
           audio.current.currentTime = newCurrentTime;
@@ -184,7 +188,7 @@ const VolumeControl = () => {
         max={100}
         min={0}
         value={[volume * 100]}
-        className="w-[95px]"
+        className="volume-slider w-[95px]"
         onValueChange={(value) => {
           const [newVolume] = value;
           const volumeValue = newVolume / 100;

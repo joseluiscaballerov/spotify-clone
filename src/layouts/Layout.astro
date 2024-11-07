@@ -15,11 +15,11 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/music.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <ViewTransitions fallback="none"/>
+    <ViewTransitions fallback="none" />
   </head>
   <body>
     <div id="app" class="relative h-screen p-2 gap-2">
@@ -28,19 +28,19 @@ const { title } = Astro.props;
       </aside>
 
       <main class="[grid-area:main] rounded bg-zinc-900 overflow-y-auto">
-		<slot />
+        <slot />
       </main>
 
       <footer class="[grid-area:player] h-[80px]">
         <!-- Añadiendo un transition name y persist, haremos que el estado del reproductor no cambie. -->
-        <Player client:load transition:name="media-player" transition:persist/>
+        <Player client:load transition:name="media-player" transition:persist />
       </footer>
-
     </div>
   </body>
 </html>
 
 <style>
+  /* Mantener el diseño para pantallas grandes (escritorio) */
   #app {
     display: grid;
     grid-template-areas:
@@ -49,13 +49,135 @@ const { title } = Astro.props;
     grid-template-columns: 350px 1fr;
     grid-template-rows: 1fr auto;
   }
+
+  /* Adaptar para pantallas más pequeñas (móviles/tablets) */
+  @media (max-width: 768px) {
+    #app {
+      grid-template-areas:
+        "main"
+        "player";
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+    }
+
+    aside {
+      display: none; /* Ocultar el aside en pantallas pequeñas */
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%; /* El reproductor se fija abajo ocupando todo el ancho */
+      background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+      padding: 10px; /* Espaciado interno */
+      z-index: 10; /* Asegura que el footer esté por encima de otros elementos */
+    }
+
+    main {
+      margin-bottom: 80px; /* Dar espacio al footer en móviles */
+    }
+  }
 </style>
 
 <style is:global>
   html {
     font-family: "CircularStd", system-ui, sans-serif;
     background: #121212;
-	color: white;
+    color: white;
+  }
+
+  .imagenCancion {
+    max-width: 100%; /* Permite que la imagen se ajuste a su contenedor sin estirarse */
+    height: auto; /* Mantiene la relación de aspecto original */
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+  }
+
+  @media (max-width: 768px) {
+    footer {
+      height: 60px; /* Cambia la altura del footer si es necesario */
+    }
+
+    /* Ajustar la imagen del reproductor */
+    .player-image {
+      width: 48px; /* Cambia según sea necesario */
+      height: 48px; /* Cambia según sea necesario */
+    }
+
+    /* Ajustar el slider del tiempo del reproductor */
+    .player-slider {
+      width: 100px; /* Cambia según sea necesario */
+    }
+
+    /* Ajustar el slider del volumen */
+    .volume-slider {
+      width: 40px; /* Cambia según sea necesario */
+    }
+
+    /* Ajustar los iconos del reproductor */
+    .player-icon {
+      width: 12px; /* Cambia según sea necesario */
+      height: 12px; /* Cambia según sea necesario */
+    }
+
+    .nombre-artista,
+    .nombre-cancion {
+      display: none;
+    }
+
+    .imagenPlaylist {
+      width: 156px; /* Ajusta el tamaño según necesites */
+      height: 156px;
+    }
+
+    .tituloPlaylist {
+      font-size: 1.5rem; /* Ajusta el tamaño del texto para pantallas pequeñas */
+    }
+
+    .tablaPlaylist {
+      font-size: 0.875rem; /* Ajusta el tamaño de las letras de toda la tabla */
+    }
+
+    .cabeceraTabla {
+      font-size: 0.75rem; /* Reduce el tamaño del texto en el encabezado */
+    }
+
+    .filaCancion .tituloCancion,
+    .filaCancion .artistasCancion,
+    .filaCancion .celdaCancion {
+      font-size: 0.75rem; /* Ajusta el tamaño de los títulos y artistas de las canciones */
+    }
+
+    .imagenCancion {
+      max-width: 80%; /* Permite que la imagen se ajuste a su contenedor sin estirarse */
+    }
+
+    .playlist-item {
+      width: 130px;
+      margin: 5px; /* Ajusta el tamaño para que se alineen dos en dos con un pequeño margen */ /* Añade margen para espaciar las cajas */
+    }
+
+    .imagenPlaylist {
+      width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho de la caja */
+      height: auto; /* Mantiene la relación de aspecto original */
+    }
+
+    .tituloPlaylist {
+      font-size: 1rem; /* Ajusta el tamaño del texto si es necesario */
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .imagenCancion {
+        max-width: 70%; /* Permite que las imágenes sean un 70% del ancho del contenedor en tabletas */
+      }
+    }
+
+    /* Estilo para dispositivos grandes */
+    @media (min-width: 1025px) {
+      .imagenCancion {
+        max-width: 50%; /* Limita el ancho de la imagen al 50% en pantallas grandes */
+      }
+    }
   }
 
   @font-face {
